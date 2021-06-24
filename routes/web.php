@@ -21,18 +21,18 @@ Route::get('hi/{name}', function (string $name) {
     return "Hello, {$name}";
 });
 
-Route::get('welcome/{username}', function (string $username) {
+Route::get('welcome/{username}', function (string $username) { // Страница приветствия
     return "Welcome, {$username}";
 });
 
-Route::get('about', function () {
+Route::get('about', function () { // Страница с информацией о проекте
     return "About us";
 });
 
-Route::get('news', function () {
+Route::get('news', function () { // Страница со всеми новостями
     return "All news for today";
 });
 
-Route::get('news/{id}', function (int $id) {
+Route::get('news/{id}', function (int $id) { // Страница с конкретной новостью
     return "News no. {$id}";
 });
