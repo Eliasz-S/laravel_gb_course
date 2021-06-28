@@ -27,6 +27,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::resource('news', AdminNewsController::class);
 });
 
+
+//user
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news');
 
