@@ -17,6 +17,8 @@ class Controller extends BaseController
     protected function getNews() : array
     {
         $faker = Factory::create('ru_Ru');
+        
+        $categories = $this->getCategories();
 
         for ($i = 0; $i < 10; $i++) {
 
@@ -24,6 +26,7 @@ class Controller extends BaseController
 
             $this->news[] = [
                 'title' => "Новость {$number}",
+                'category_id' => array_rand($categories),
                 'description' => $faker->text(100)
             ];
             
@@ -31,4 +34,34 @@ class Controller extends BaseController
 
         return $this->news;
     } 
+
+    protected function getCategories() : array
+    {
+        return [
+            [
+                'id' => 1,
+                'name' => 'Политика'
+            ],
+            [
+                'id' => 2,
+                'name' => 'Общество'
+            ],
+            [
+                'id' => 3,
+                'name' => 'Экономика'
+            ],
+            [
+                'id' => 4,
+                'name' => 'Культура'
+            ],
+            [
+                'id' => 5,
+                'name' => 'Технологии'
+            ],
+            [
+                'id' => 6,
+                'name' => 'Спорт'
+            ]
+        ];
+    }
 }
