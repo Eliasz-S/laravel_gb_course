@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 use PhpParser\Node\Expr\FuncCall;
@@ -35,3 +36,10 @@ Route::get('/news', [NewsController::class, 'index'])
 Route::get('/news/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')
     ->name('news.show');
+
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories');
+
+Route::get('/categories/{id}', [CategoryController::class, 'filter'])
+    ->where('id', '\d+')
+    ->name('categories.filter');

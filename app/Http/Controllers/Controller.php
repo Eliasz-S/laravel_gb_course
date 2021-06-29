@@ -17,17 +17,17 @@ class Controller extends BaseController
     protected function getNews() : array
     {
         $faker = Factory::create('ru_Ru');
-        
+
         $categories = $this->getCategories();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 24; $i++) {
 
             $number = $i + 1;
 
             $this->news[] = [
                 'title' => "Новость {$number}",
                 'category_id' => array_rand($categories),
-                'description' => $faker->text(100)
+                'description' => $faker->text(200)
             ];
             
         }
@@ -35,33 +35,144 @@ class Controller extends BaseController
         return $this->news;
     } 
 
+    /* protected function getNews() : array
+    {
+
+        $faker = Factory::create('ru_Ru');
+
+        return [
+            [
+                'title' => $faker->text(20),
+                'category_id' => 1,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 2,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 3,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 4,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 5,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 6,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 1,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 2,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 3,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 4,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 5,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 6,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 1,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 2,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 3,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 4,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 5,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 6,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 1,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 2,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 3,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 4,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 5,
+                'description' => $faker->text(200)
+            ],
+            [
+                'title' => $faker->text(20),
+                'category_id' => 6,
+                'description' => $faker->text(200)
+            ]
+        ];
+    } */
+
     protected function getCategories() : array
     {
         return [
-            [
-                'id' => 1,
-                'name' => 'Политика'
-            ],
-            [
-                'id' => 2,
-                'name' => 'Общество'
-            ],
-            [
-                'id' => 3,
-                'name' => 'Экономика'
-            ],
-            [
-                'id' => 4,
-                'name' => 'Культура'
-            ],
-            [
-                'id' => 5,
-                'name' => 'Технологии'
-            ],
-            [
-                'id' => 6,
-                'name' => 'Спорт'
-            ]
+            1 => 'Политика',
+            2 => 'Общество',
+            3 => 'Экономика',
+            4 => 'Культура',
+            5 => 'Технологии',
+            6 => 'Спорт'
         ];
     }
 }
