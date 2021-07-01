@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 use PhpParser\Node\Expr\FuncCall;
@@ -18,9 +19,15 @@ use PhpParser\Node\Expr\FuncCall;
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+
+//main page
+Route::get('/', [MainController::class, 'index'])
+    ->name('main');
 
 //admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
