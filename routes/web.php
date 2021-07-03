@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Expr\FuncCall;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,26 +19,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
 
-Route::get('hi/{name}', function (string $name) {
-    return "Hello, {$name}";
+//main page
+Route::get('/', [MainController::class, 'index'])
+    ->name('main');
+
+//admin
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+    Route::resource('categories', AdminCategoryController::class);
+    Route::resource('news', AdminNewsController::class);
 });
 
-Route::get('welcome/{username}', function (string $username) { // Страница приветствия
-    return "Welcome, {$username}";
-});
 
-Route::get('about', function () { // Страница с информацией о проекте
-    return "About us";
-});
+//user
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news');
 
-Route::get('news', function () { // Страница со всеми новостями
-    return "All news for today";
-});
+Route::get('/news/{id}', [NewsController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('news.show');
 
-Route::get('news/{id}', function (int $id) { // Страница с конкретной новостью
-    return "News no. {$id}";
-});
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories');
+
+Route::get('/categories/{id}', [CategoryController::class, 'filter'])
+    ->where('id', '\d+')
+    ->name('categories.filter');
