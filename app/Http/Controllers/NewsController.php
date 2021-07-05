@@ -25,7 +25,7 @@ class NewsController extends Controller
 
         $categoryId = $thisNews['category_id']; // id категории данной новости
 
-        $category = $categories[$categoryId]; // название категории, согласно его индексу (id)
+        $category = $categories[$categoryId]; // название категории, согласно её индексу (id)
 
         return view('news.show', [
             'news' => $thisNews,
