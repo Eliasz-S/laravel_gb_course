@@ -16,6 +16,22 @@ class NewsController extends Controller
 
     public function show(int $id)
     {
-        return "Новость с ID={$id}";
+
+        $news = $this->getNews(); // все новости
+
+        $categories = $this->getCategories(); // все категории
+
+        $thisNews = $news[$id - 1]; // данная новость
+
+        $categoryId = $thisNews['category_id']; // id категории данной новости
+
+        $category = $categories[$categoryId]; // название категории, согласно её индексу (id)
+
+        return view('news.show', [
+            'news' => $thisNews,
+            'category' => $category,
+            'categoryId' => $categoryId
+        ]);
+
     }
 }

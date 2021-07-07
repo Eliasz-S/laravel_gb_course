@@ -7,14 +7,21 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index() // вывод всех категорий списком
     {
-        //
+        return view('admin.categories.index', [
+            'categoriesList' => $this->getCategories()
+        ]);
+    }
+
+    public function filter(int $id) // вывод всех новостей в конкретной категории
+    {
+        return view('admin.categories.filter', [
+            'id' => $id,
+            'categoriesList' => $this->getCategories(),
+            'newsList' => $this->getNews()
+        ]);
     }
 
     /**

@@ -13,7 +13,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $news = [];
-    
+
     protected function getNews() : array
     {
         $faker = Factory::create('ru_Ru');
@@ -29,12 +29,12 @@ class Controller extends BaseController
                 'category_id' => array_rand($categories),
                 'description' => $faker->text(200)
             ];
-            
+
         }
 
         return $this->news;
-    } 
-    
+    }
+
 
     protected function getCategories() : array
     {
