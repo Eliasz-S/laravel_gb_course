@@ -18,4 +18,13 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_index_json()
+    {
+        $response = $this->get('/');
+        $response->assertJson([
+            'title' => 'Example',
+            'description' => 'ExampleDescription'
+        ], true);
+    }
 }
