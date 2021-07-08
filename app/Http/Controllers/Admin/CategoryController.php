@@ -46,7 +46,7 @@ class CategoryController extends Controller
             'title' => ['required', 'string']
         ]);
         
-        return redirect('/admin/categories/create');
+        return redirect('/admin/categories/create', 201);
     }
 
     /**

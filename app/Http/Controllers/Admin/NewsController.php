@@ -38,7 +38,7 @@ class NewsController extends Controller
             'title' => ['required', 'string']
         ]);
         
-        return redirect('/admin/news/create');
+        return redirect('/admin/news/create', 201);
     }
 
     /**

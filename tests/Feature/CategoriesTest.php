@@ -6,50 +6,48 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class NewsTest extends TestCase
+class CategoriesTest extends TestCase
 {
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_news_list_status()
+    public function test_categories_list_status()
     {
-        $response = $this->get('/news');
+        $response = $this->get('/categories');
 
         $response->assertStatus(200);
     }
 
-    public function test_news_show_status()
+    public function test_categories_filter_status()
     {
-        $id = mt_rand(1, 24);
+        $id = mt_rand(1, 6);
 
-        $response = $this->get("/news/$id");
-
+        $response = $this->get("/categories/$id");
+        
         $response->assertStatus(200);
     }
 
     public function test_redirect_after_create()
     {
         $response = $this->post(
-            route('admin.news.store'), 
+            route('admin.categories.store'), 
             [
-                'title' => 'News 31',
-                'status' => 'Draft',
+                'title' => 'Футбол',
                 'description' => 'some description'
             ]
         );
 
-        $response->assertRedirect('/admin/news/create');
+        $response->assertRedirect('/admin/categories/create');
     }
 
-    public function test_news_created()
+    public function test_category_created()
     {
         $response = $this->post(
-            route('admin.news.store'), 
+            route('admin.categories.store'), 
             [
-                'title' => 'News 31',
-                'status' => 'Draft',
+                'title' => 'Футбол',
                 'description' => 'some description'
             ]
         );
