@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class FeedbackController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return view('admin.news.index', [
-            'newsList' => $this->getNews(),
-            'categoriesList' => $this->getCategories()
-        ]);
+        //
     }
 
     /**
@@ -23,7 +24,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view('feedback');
     }
 
     /**
@@ -35,10 +36,24 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required', 'string']
+            'name' => ['required', 'string'],
+            'email' => ['required', 'string'],
+            'message' => ['required', 'string']
         ]);
-        
-        return redirect('/admin/news/create', 201);
+
+        $file = 'feedback.txt';
+
+        foreach ($_POST as $key => $field) {
+
+            if ($key === '_token') continue;
+            
+            file_put_contents($file, $field . PHP_EOL, FILE_APPEND);
+
+        }
+
+        file_put_contents($file, PHP_EOL, FILE_APPEND);
+
+        return view('feedback')->with('flag', 1);
     }
 
     /**

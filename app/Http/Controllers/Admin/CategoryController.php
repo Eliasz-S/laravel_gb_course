@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -42,7 +42,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string']
+        ]);
+        
+        return redirect('/admin/categories/create', 201);
     }
 
     /**
