@@ -29,17 +29,17 @@
                         <tbody>
                             @forelse ($newsList as $news)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $news['title'] }}</td>
+                                    <td>{{ $news->id }}</td>
+                                    <td>{{ $news->title }}</td>
                                     <td>
-                                        <a href="{{ route('admin.categories.filter', ['id' => $news['category_id']]) }}">
-                                            {{ $categoriesList[$news['category_id']] }}
+                                        <a href="{{ route('admin.categories.filter', ['id' => $news->category_id]) }}">
+                                            {{ $news->categoryTitle }}
                                         </a>
                                     </td>
-                                    <td>{{ $news['description'] }}</td>
-                                    <td>{{ now()->format('d-m-Y H:i') }}</td>
+                                    <td>{{ $news->description }}</td>
+                                    <td>{{ $news->created_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin.news.edit', ['news' => $loop->iteration]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
+                                        <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
                                         <a href="javascript:;" style="font-size: 12px; color: red;">Уд.</a></td>
                                 </tr>
                             @empty

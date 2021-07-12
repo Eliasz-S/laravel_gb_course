@@ -6,19 +6,19 @@
                 @forelse ($newsList as $news)
                 <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="{{ route('news.show', ['id' => $loop->iteration]) }}">
-                            <h2 class="post-title">{{ $news['title'] }}</h2>
-                            <h3 class="post-subtitle">{!! $news['description'] !!}</h3>
+                        <a href="{{ route('news.show', ['id' => $news->id]) }}">
+                            <h2 class="post-title">{{ $news->title }}</h2>
+                            <h3 class="post-subtitle">{!! $news->description !!}</h3>
                         </a>
                         <h4 class="post-preview" style="font-style: italic">
-                            <a href="{{ route('categories.filter', ['id' => $news['category_id']]) }}">
-                                {{ $categoriesList[$news['category_id']] }}
+                            <a href="{{ route('categories.filter', ['id' => $news->category_id]) }}">
+                                {{ $news->categoryTitle }}
                             </a>
                         </h4>
                         <p class="post-meta">
                             Опубликовал
                             <a href="#!">Админ</a>
-                            от {{ now()->format('d-m-Y H:i') }}
+                            от {{ $news->created_at }}
                         </p>
                     </div>
                 <!-- Divider-->

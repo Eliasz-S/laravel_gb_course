@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class SourceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('categories')->insert($this->getData());
+        \DB::table('sources')->insert($this->getData());
     }
 
     public function getData() : array
@@ -26,8 +26,8 @@ class CategorySeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $data[] = [
                 'title' => $faker->sentence(2),
+                'url' => $faker->url,
                 'description' => $faker->text(250),
-                'color' => $faker->hexColor,
                 'created_at' => now(),
                 'updated_at' => now()
             ];

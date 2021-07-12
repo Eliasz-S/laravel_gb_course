@@ -19,6 +19,10 @@ class CreateNewsTable extends Migration
                 ->constrained('categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->foreignId('source_id')
+                ->constrained('sources')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('title', 191);
             $table->string('slug', 191);
             $table->string('image', 255)->nullable();

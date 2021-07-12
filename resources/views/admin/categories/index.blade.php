@@ -20,22 +20,24 @@
                         <tr>
                             <th>#ID</th>
                             <th>Заголовок</th>
+                            <th>Описание</th>
                             <th>Дата добавления</th>
                             <th>Управление</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse ($categoriesList as $category)
+                        @forelse ($categoryList as $category)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $category->id }}</td>
                                 <td>
                                     <a href="{{ route('admin.categories.filter', ['id' => $loop->iteration]) }}">
-                                        {{ $category }}
+                                        {{ $category->title }}
                                     </a>
                                 </td>
-                                <td>{{ now()->format('d-m-Y H:i') }}</td>
+                                <td>{{ $category->description }}</td>
+                                <td>{{ $category->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('admin.categories.edit', ['category' => $loop->iteration]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
+                                    <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
                                     <a href="javascript:;" style="font-size: 12px; color: red;">Уд.</a></td>
                             </tr>
                         @empty
