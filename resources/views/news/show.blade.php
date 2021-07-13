@@ -6,16 +6,16 @@
                 <!-- Post preview-->
                 <div class="post-preview">
                     <h4 class="post-subtitle" style="font-style: italic; font-weight: normal">
-                        <a href="{{ route('categories.filter', ['id' => $categoryId]) }}">
-                            {{ $category }}
+                        <a href="{{ route('categories.filter', ['id' => $news->categoryId]) }}">
+                            {{ $news->categoryTitle }}
                         </a>
                     </h4>
-                    <h2 class="post-title">{{ $news['title'] }}</h2>
-                    <p class="post-subtitle">{!! $news['description'] !!}</p>
+                    <h2 class="post-title">{{ $news->title }}</h2>
+                    <p class="post-subtitle">{!! $news->description !!}</p>
                     <p class="post-meta">
                         Опубликовал
                         <a href="#!">Админ</a>
-                        от {{ now()->format('d-m-Y H:i') }}
+                        от {{ $news->created_at }}
                     </p>
                 </div>
             </div>
