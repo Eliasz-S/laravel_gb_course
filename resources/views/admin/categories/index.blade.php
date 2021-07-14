@@ -15,6 +15,7 @@
                     Список категорий
                 </div>
                 <div class="card-body">
+                    @include('inc.message')
                     <table id="datatablesSimple">
                         <thead>
                         <tr>

@@ -12,9 +12,8 @@ class CategoryController extends Controller
 
     public function index() // вывод всех категорий списком
     {
-        $categoryModel = new Category();
-
-        $categories = $categoryModel->getCategories();
+        $categories = Category::select(['id', 'title', 'description', 'created_at'])
+            ->get();
 
         return view('admin.categories.index', [
             'categoryList' => $categories
@@ -82,19 +81,32 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        dd($category);
+        return view('admin.categories.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $data = $request->only(['title', 'color', 'description']);
+
+        $category->title = $request->input('title');
+        $category->color = $request->input('color');
+        $category->description = $request->input('description');
+
+        if ($category->save()) {
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Запись успешно обновлена');
+        }
+
+        return back()->with('error', 'Не удалось обновить запись');
     }
 
     /**
