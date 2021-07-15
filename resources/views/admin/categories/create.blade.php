@@ -8,12 +8,8 @@
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active">Добавить новую категорию</li>
             </ol>
-            @if ($errors->any())
-                @foreach($errors->all() as $error)
-                    <div class="alert alert-danger">{{ $error }}</div>
-                @endforeach
-            @endif
-        
+            @include('inc.error')
+
             <form action="{{ route('admin.categories.store') }}" method="POST">
                 @csrf
                 <div class="form-group">

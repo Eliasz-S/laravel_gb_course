@@ -4,25 +4,23 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <h1 class="post-heading">Все новости из категории "{{ $category->title }}"</h1>
-                @forelse ($newsList as $news)
+                @forelse ($category->news as $news)
                     <!-- Post preview-->
-                        @if ($news->category_id == $id)
-                            <div class="post-preview">
-                                <a href="{{ route('news.show', ['id' => $news->id]) }}">
-                                    <h2 class="post-title">{{ $news->title }}</h2>
-                                    <h3 class="post-subtitle">{!! $news->description !!}</h3>
-                                </a>
-                                <p class="post-meta">
-                                    Опубликовал
-                                    <a href="#!">Админ</a>
-                                    от {{ $news->created_at }}
-                                </p>
-                            </div>
-                            <!-- Divider-->
-                            <hr class="my-4" />
-                        @endif
+                        <div class="post-preview">
+                            <a href="{{ route('news.show', ['news' => $news]) }}">
+                                <h2 class="post-title">{{ $news->title }}</h2>
+                                <h3 class="post-subtitle">{!! $news->description !!}</h3>
+                            </a>
+                            <p class="post-meta">
+                                Опубликовал
+                                <a href="#!">Админ</a>
+                                от {{ $news->created_at }}
+                            </p>
+                        </div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
                     @empty
-                        <h2 class="post-title">Отсутствуют новости в выбранной категории</h2>
+                        <p class="post-meta">Отсутствуют новости в выбранной категории</p>
                 @endforelse
             </div>
         </div>

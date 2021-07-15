@@ -22,18 +22,11 @@ class CategoryController extends Controller
 
     public function filter(int $id) // вывод всех новостей в конкретной категории
     {
-        $categoryModel = new Category();
-
-        $category = $categoryModel->getCategoryById($id);
-
-        $newsModel = new News();
-
-        $news = $newsModel->getNews();
+        $category = Category::with('news')
+            ->find($id);
 
         return view('admin.categories.filter', [
-            'id' => $id,
-            'category' => $category,
-            'newsList' => $news
+            'category' => $category
         ]);
     }
 
@@ -55,11 +48,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => ['required', 'string']
-        ]);
-        
-        return redirect('/admin/categories/create', 201);
+        $category = Category::create(
+            $request->only(['title', 'color', 'description'])
+        );
+
+        if ($category) {
+            return redirect()->route('admin.categories.index')
+                ->with('success', 'Запись успешно создана');
+        }
+
+        return back()->with('error', 'Не удалось создать запись');
     }
 
     /**
@@ -95,13 +93,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $data = $request->only(['title', 'color', 'description']);
+        $categoryStatus = $category->fill(
+            $request->only(['title', 'color', 'description'])
+        )->save();
 
-        $category->title = $request->input('title');
-        $category->color = $request->input('color');
-        $category->description = $request->input('description');
-
-        if ($category->save()) {
+        if ($categoryStatus) {
             return redirect()->route('admin.categories.index')
                 ->with('success', 'Запись успешно обновлена');
         }
@@ -112,10 +108,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
         //
     }

@@ -25,18 +25,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse ($newsList as $news)
-                            @if ($news->category_id == $id)
-                                <tr>
-                                    <td>{{ $news->id }}</td>
-                                    <td>{{ $news->title }}</td>
-                                    <td>{{ $news->description }}</td>
-                                    <td>{{ $news->created_at }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
-                                        <a href="javascript:;" style="font-size: 12px; color: red;">Уд.</a></td>
-                                </tr>
-                            @endif
+                        @forelse ($category->news as $news)
+                            <tr>
+                                <td>{{ $news->id }}</td>
+                                <td>{{ $news->title }}</td>
+                                <td>{{ $news->description }}</td>
+                                <td>{{ $news->created_at }}</td>
+                                <td>
+                                    <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
+                                    <a href="javascript:;" style="font-size: 12px; color: red;">Уд.</a></td>
+                            </tr>
                         @empty
                             <tr>
                                 <td colspan="5">Новостей не найдено</td>

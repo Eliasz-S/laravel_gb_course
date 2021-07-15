@@ -3,19 +3,14 @@
 @section('content')
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
-            @if (isset($flag) && $flag == 1)
-                <div class="alert alert-success">Отзыв успешно отправлен!</div>
-            @endif
+            @include('inc.message')
             <div class="post-preview">
                 <h1 class="mt-4">Форма обратной связи</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Оставьте свой отзыв о нашем сайте (либо пожелания по улучшению работы)</li>
                 </ol>
-                @if ($errors->any())
-                    @foreach($errors->all() as $error)
-                        <div class="alert alert-danger">{{ $error }}</div>
-                    @endforeach
-                @endif
+                @include('inc.error')
+                
                 <form action="{{ route('feedback.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
