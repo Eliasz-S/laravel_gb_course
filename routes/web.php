@@ -53,8 +53,8 @@ Route::get('/admin/categories/{id}/news', [AdminCategoryController::class, 'filt
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news');
 
-Route::get('/news/{id}', [NewsController::class, 'show'])
-    ->where('id', '\d+')
+Route::get('/news/{news}', [NewsController::class, 'show'])
+    ->where('news', '\d+')
     ->name('news.show');
 
 Route::get('/categories', [CategoryController::class, 'index'])
@@ -65,5 +65,8 @@ Route::get('/categories/{id}', [CategoryController::class, 'filter'])
     ->name('categories.filter');
 
 Route::resource('feedback', FeedbackController::class);
-Route::view('/feedback', 'feedback')
+Route::get('/review', [FeedbackController::class, 'index'])
+    ->name('review');
+Route::view('/feedback', 'feedback.create')
     ->name('feedback');
+

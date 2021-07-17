@@ -15,6 +15,7 @@
                     Список категорий
                 </div>
                 <div class="card-body">
+                    @include('inc.message')
                     <table id="datatablesSimple">
                         <thead>
                         <tr>
@@ -30,7 +31,7 @@
                             <tr>
                                 <td>{{ $category->id }}</td>
                                 <td>
-                                    <a href="{{ route('admin.categories.filter', ['id' => $loop->iteration]) }}">
+                                    <a href="{{ route('admin.categories.filter', ['id' => $category->id]) }}">
                                         {{ $category->title }}
                                     </a>
                                 </td>

@@ -23,7 +23,7 @@
                 <li><a href="{{ route('main') }}" class="nav-link px-2 link-dark">Главная</a></li>
                 <li><a href="{{ route('news') }}" class="nav-link px-2 link-dark">Новости</a></li>
                 <li><a href="{{ route('categories') }}" class="nav-link px-2 link-dark">Категории</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">FAQ</a></li>
+                <li><a href="{{ route('review') }}" class="nav-link px-2 link-dark">Отзывы</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">О нас</a></li>
             </ul>
 

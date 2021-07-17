@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -14,7 +15,11 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+        $feedback = Feedback::all();
+
+        return view('feedback.index', [
+            'feedbackList' => $feedback
+        ]);
     }
 
     /**
@@ -24,7 +29,7 @@ class FeedbackController extends Controller
      */
     public function create()
     {
-        return view('feedback');
+        return view('feedback.create');
     }
 
     /**
@@ -41,19 +46,16 @@ class FeedbackController extends Controller
             'message' => ['required', 'string']
         ]);
 
-        $file = 'feedback.txt';
+        $feedback = Feedback::create(
+            $request->only(['name', 'email', 'message'])
+        );
 
-        foreach ($_POST as $key => $field) {
-
-            if ($key === '_token') continue;
-            
-            file_put_contents($file, $field . PHP_EOL, FILE_APPEND);
-
+        if ($feedback) {
+            return redirect()->route('review')
+                ->with('success', 'Отзыв отправлен успешно');
         }
 
-        file_put_contents($file, PHP_EOL, FILE_APPEND);
-
-        return view('feedback')->with('flag', 1);
+        return back()->with('error', 'Не удалось отправить отзыв');
     }
 
     /**

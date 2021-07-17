@@ -6,8 +6,8 @@
                 <!-- Post preview-->
                 <div class="post-preview">
                     <h4 class="post-subtitle" style="font-style: italic; font-weight: normal">
-                        <a href="{{ route('categories.filter', ['id' => $news->categoryId]) }}">
-                            {{ $news->categoryTitle }}
+                        <a href="{{ route('categories.filter', ['id' => $news->category_id]) }}">
+                            {{ optional($news->category)->title }}
                         </a>
                     </h4>
                     <h2 class="post-title">{{ $news->title }}</h2>

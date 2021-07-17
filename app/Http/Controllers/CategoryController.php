@@ -10,9 +10,7 @@ class CategoryController extends Controller
 {
     public function index() // вывод всех категорий списком
     {
-        $categoryModel = new Category();
-
-        $categories = $categoryModel->getCategories();
+        $categories = Category::all();
         
         return view('categories.index', [
             'categoryList' => $categories
@@ -21,18 +19,11 @@ class CategoryController extends Controller
 
     public function filter(int $id) // вывод всех новостей в конкретной категории
     {
-        $categoryModel = new Category();
-
-        $category = $categoryModel->getCategoryById($id);
-
-        $newsModel = new News();
-
-        $news = $newsModel->getNews();
+        $category = Category::with('news')
+            ->find($id);
 
         return view('categories.filter', [
-            'id' => $id,
-            'category' => $category,
-            'newsList' => $news
+            'category' => $category
         ]);
     }
 }

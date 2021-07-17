@@ -15,6 +15,7 @@
                     Список новостей
                 </div>
                 <div class="card-body">
+                    @include('inc.message')
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
@@ -33,7 +34,7 @@
                                     <td>{{ $news->title }}</td>
                                     <td>
                                         <a href="{{ route('admin.categories.filter', ['id' => $news->category_id]) }}">
-                                            {{ $news->categoryTitle }}
+                                            {{ optional($news->category)->title }}
                                         </a>
                                     </td>
                                     <td>{{ $news->description }}</td>
