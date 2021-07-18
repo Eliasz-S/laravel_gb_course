@@ -108,11 +108,17 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  News $news
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $category->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }
