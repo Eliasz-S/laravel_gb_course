@@ -43,7 +43,7 @@
 
         <footer class="footer mt-auto py-3 bg-dark fixed-bottom">
             <div class="container">
-                <span class="text-light">&copy; Cёмочкин Илья</span>
+                <span class="text-light">&copy; Cёмочкин Илья {{ now()->format('Y') }}</span>
             </div>
         </footer>
     </div>

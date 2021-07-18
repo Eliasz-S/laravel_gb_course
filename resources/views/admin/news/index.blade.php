@@ -41,7 +41,8 @@
                                     <td>{{ $news->created_at }}</td>
                                     <td>
                                         <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}" style="font-size: 12px;">Ред.</a> &nbsp; | &nbsp;
-                                        <a href="javascript:;" style="font-size: 12px; color: red;">Уд.</a></td>
+                                        <a href="javascript:;" class="delete" rel="{{ $news->id }}" style="font-size: 12px; color: red;">Уд.</a>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
@@ -56,3 +57,25 @@
     </main>
 
 @endsection
+@push('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(() => {
+            $(".delete").on('click', () => {
+                if (confirm('Подтвердите удаление записи')) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: 'DELETE',
+                        url: "/admin/news/" + $(this).attr('rel'),
+                        complete: () => {
+                            alert('Запись удалена');
+                            location.reload();
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+@endpush

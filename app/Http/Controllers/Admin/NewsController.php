@@ -14,7 +14,6 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::with('category')
-            ->select()
             ->get();
 
         return view('admin.news.index', [
@@ -116,8 +115,14 @@ class NewsController extends Controller
      * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Request $request, News $news)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $news->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }
