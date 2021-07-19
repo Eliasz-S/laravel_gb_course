@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FeedbackStore;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 
@@ -38,24 +39,18 @@ class FeedbackController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FeedbackStore $request)
     {
-        $request->validate([
-            'name' => ['required', 'string'],
-            'email' => ['required', 'string'],
-            'message' => ['required', 'string']
-        ]);
-
         $feedback = Feedback::create(
             $request->only(['name', 'email', 'message'])
         );
 
         if ($feedback) {
             return redirect()->route('review')
-                ->with('success', 'Отзыв отправлен успешно');
+                ->with('success', __('message.feedback.created.success'));
         }
 
-        return back()->with('error', 'Не удалось отправить отзыв');
+        return back()->with('error', __('message.feedback.created.error'));
     }
 
     /**
