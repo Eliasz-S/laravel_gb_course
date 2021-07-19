@@ -58,24 +58,5 @@
 
 @endsection
 @push('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script>
-        $(function() {
-            $("#datatablesSimple").on('click', 'a.delete', function() {
-                if (confirm('Подтвердите удаление записи')) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        type: 'DELETE',
-                        url: "/admin/news/" + $(this).attr('rel'),
-                        complete: function() {
-                            alert('Запись удалена');
-                            location.reload();
-                        }
-                    })
-                }
-            })
-        })
-    </script>
+    <script src="{{ asset('assets/admin/js/delete-news.js') }}"></script>
 @endpush

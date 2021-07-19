@@ -37,6 +37,7 @@
         <script src="{{ asset('assets/admin/js/scripts.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="{{ asset('assets/admin/js/datatables-simple-demo.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         @stack('js')
     </body>
 </html>
