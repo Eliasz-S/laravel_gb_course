@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsStore;
+use App\Http\Requests\NewsUpdate;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -14,7 +16,6 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::with('category')
-            ->select()
             ->get();
 
         return view('admin.news.index', [
@@ -42,12 +43,8 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewsStore $request)
     {
-        $request->validate([
-            'title' => ['required', 'string']
-        ]);
-
         $data = $request->only(['category_id', 'title', 'status', 'description']);
         $data['slug'] = Str::slug($data['title']);
         
@@ -55,10 +52,10 @@ class NewsController extends Controller
 
         if ($news) {
             return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно создана');
+                ->with('success', __('message.admin.news.created.success'));
         }
 
-        return back()->with('error', 'Не удалось создать запись');
+        return back()->with('error', __('message.admin.news.created.error'));
     }
 
     /**
@@ -95,19 +92,20 @@ class NewsController extends Controller
      * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(NewsUpdate $request, News $news)
     {
-        $data = $request->only(['category_id', 'title', 'status', 'description']);
+        
+        $data = $request->validated();
         $data['slug'] = Str::slug($data['title']);
 
         $newsStatus = $news->fill($data)->save();
 
         if ($newsStatus) {
             return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно обновлена');
+                ->with('success', __('message.admin.news.updated.success'));
         }
 
-        return back()->with('error', 'Не удалось обновить запись');
+        return back()->with('error', __('message.admin.news.updated.error'));
     }
 
     /**
@@ -116,8 +114,14 @@ class NewsController extends Controller
      * @param  News $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Request $request, News $news)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $news->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }

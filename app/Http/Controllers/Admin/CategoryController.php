@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryStore;
+use App\Http\Requests\CategoryUpdate;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -46,7 +48,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStore $request)
     {
         $category = Category::create(
             $request->only(['title', 'color', 'description'])
@@ -54,10 +56,10 @@ class CategoryController extends Controller
 
         if ($category) {
             return redirect()->route('admin.categories.index')
-                ->with('success', 'Запись успешно создана');
+                ->with('success', __('message.admin.categories.created.success'));
         }
 
-        return back()->with('error', 'Не удалось создать запись');
+        return back()->with('error', __('message.admin.categories.created.error'));
     }
 
     /**
@@ -91,7 +93,7 @@ class CategoryController extends Controller
      * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdate $request, Category $category)
     {
         $categoryStatus = $category->fill(
             $request->only(['title', 'color', 'description'])
@@ -99,20 +101,26 @@ class CategoryController extends Controller
 
         if ($categoryStatus) {
             return redirect()->route('admin.categories.index')
-                ->with('success', 'Запись успешно обновлена');
+                ->with('success', __('message.admin.categories.updated.success'));
         }
 
-        return back()->with('error', 'Не удалось обновить запись');
+        return back()->with('error', __('message.admin.categories.updated.error'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  News $news
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                $category->delete();
+            } catch (\Exception $e) {
+                report($e);
+            }
+        }
     }
 }
