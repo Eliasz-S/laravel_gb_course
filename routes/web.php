@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -38,16 +39,6 @@ Route::get('/', function () {
 Route::get('/', [MainController::class, 'index'])
     ->name('main');
 
-//admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
-    Route::view('/', 'admin.index');
-    Route::resource('categories', AdminCategoryController::class);
-    Route::resource('news', AdminNewsController::class);
-});
-
-Route::get('/admin/categories/{id}/news', [AdminCategoryController::class, 'filter'])
-    ->name('admin.categories.filter');
-
 
 //user
 Route::get('/news', [NewsController::class, 'index'])
@@ -70,3 +61,35 @@ Route::get('/review', [FeedbackController::class, 'index'])
 Route::view('/feedback', 'feedback.create')
     ->name('feedback');
 
+// Route::get('session', function() {
+//     session(['newSession' => 'newValue']);
+
+//     if(session()->has('newSession')) {
+//         session()->remove('newSession');
+//     }
+
+//     return "Сессии нет";
+// });
+
+//backoffice
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/account', AccountController::class);
+    Route::get('/logout', function() {
+        \Auth::logout();
+        return redirect()->route('login');
+    })->name('logout');
+
+    //admin
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'as' => 'admin.'], function() {
+        Route::view('/', 'admin.index')->name('index');
+        Route::resource('categories', AdminCategoryController::class);
+        Route::resource('news', AdminNewsController::class);
+    });
+
+    Route::get('/admin/categories/{id}/news', [AdminCategoryController::class, 'filter'])
+        ->name('admin.categories.filter');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
