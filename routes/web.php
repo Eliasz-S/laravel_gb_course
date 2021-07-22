@@ -4,6 +4,7 @@ use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
@@ -73,7 +74,7 @@ Route::view('/feedback', 'feedback.create')
 
 //backoffice
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/account', AccountController::class);
+    Route::get('/account', AccountController::class)->name('account');
     Route::get('/logout', function() {
         \Auth::logout();
         return redirect()->route('login');
@@ -84,6 +85,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::view('/', 'admin.index')->name('index');
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
+        Route::resource('users', AdminUserController::class);
     });
 
     Route::get('/admin/categories/{id}/news', [AdminCategoryController::class, 'filter'])

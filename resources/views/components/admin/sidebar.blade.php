@@ -16,10 +16,14 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                 Новости
             </a>
+            <a class="nav-link @if(request()->routeIs('admin.users.*')) active @endif" href="{{ route('admin.users.index') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                Администрирование
+            </a>
         </div>
     </div>
     <div class="sb-sidenav-footer">
         <div class="small">Logged in as:</div>
-        Start Bootstrap
+        {{ \Auth::user()->name }}
     </div>
 </nav>
