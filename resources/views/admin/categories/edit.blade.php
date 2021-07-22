@@ -1,4 +1,4 @@
-@extends('layouts/admin')
+@extends('layouts.admin')
 @section('title') Редактировать категорию - @parent @stop
 @section('content')
 
