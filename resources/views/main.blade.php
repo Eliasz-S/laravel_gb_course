@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <title>Агрегатор новостей</title>
     <style>
         .nav-link:hover {
@@ -28,9 +30,43 @@
             </ul>
 
             <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-primary me-2">Войти</button>
-                <button type="button" class="btn btn-primary">Зарегистрироваться</button>
+                @guest
+                    @if (Route::has('login'))
+                        <button type="button" onclick="window.location='{{ route('login') }}'" class="btn btn-primary me-2">Войти</button>
+                    @endif
+
+                    @if (Route::has('register'))
+                        <button type="button" onclick="window.location='{{ route('register') }}'" class="btn btn-primary">Зарегистрироваться</button>
+                    @endif
+                @else
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="javascript:;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('account') }}">
+                                    {{ __('auth.forms.settings') }}
+                                </a>
+                                <a 
+                                    class="dropdown-item" 
+                                    href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();"
+                                >
+                                    {{ __('auth.forms.logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                @endguest
             </div>
+            
         </header>
 
         <main class="flex-shrink-0">
