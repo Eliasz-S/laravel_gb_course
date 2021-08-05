@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryUpdate extends FormRequest
+class SourceStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class CategoryUpdate extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'min: 3', 'max: 99'],
-            'color' => ['sometimes'],
+            'title' => ['required', 'string', 'min: 3', 'max: 199'],
+            'category_id' => ['required', 'integer', 'min: 1'],
+            'url' => ['required', 'url'],
             'description' => ['required']
         ];
     }
@@ -33,16 +34,17 @@ class CategoryUpdate extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'Поле :attribute необходимо заполнить'
+            'required' => 'Поле :attribute необходимо заполнить',
+            'url' => 'Поле :attribute должно быть интернет-страницей'
         ];
     }
 
     public function attributes()
     {
         return [
-            'title' => 'название категории', 
-            'color' => 'цвет',
-            'description' => 'описание'
+            'title' => 'название источника',
+            'description' => 'описание',
+            'url' => 'ссылка на источник'
         ];
     }
 }

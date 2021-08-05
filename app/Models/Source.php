@@ -6,19 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class News extends Model
+class Source extends Model
 {
     use HasFactory;
 
-    protected $table = "news";
+    protected $table = "sources";
 
     protected $fillable = [
         'category_id',
-        'source_id',
         'title',
-        'status',
-        'slug',
-        'image',
+        'url',
         'description'
     ];
 
@@ -26,5 +23,4 @@ class News extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
-    
 }

@@ -1,16 +1,16 @@
 @extends('layouts.admin')
-@section('title') Добавить новость - @parent @stop
+@section('title') Добавить источник - @parent @stop
 @section('content')
 
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Добавить новость</h1>
+            <h1 class="mt-4">Добавить источник</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Добавить новую новость</li>
+                <li class="breadcrumb-item active">Добавить новостной источник</li>
             </ol>
             @include('inc.error')
         
-            <form action="{{ route('admin.news.store') }}" method="POST">
+            <form action="{{ route('admin.sources.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="category">Категория</label>
@@ -27,22 +27,13 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="title">Заголовок</label>
+                    <label for="title">Название источника</label>
                     <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="image">Изображение</label>
-                    <input type="file" class="form-control" id="image" name="image">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="status">Статус</label>
-                    <select class="form-control" name="status" id="status">
-                        <option @if(old('status') === 'Draft') selected @endif> Draft </option>
-                        <option @if(old('status') === 'Published') selected @endif> Published </option>
-                        <option @if(old('status') === 'Blocked') selected @endif> Blocked </option>
-                    </select>
+                    <label for="url">Ссылка на источник</label>
+                    <input type="text" class="form-control" id="url" name="url" value="{{ old('url') }}">
                 </div>
                 <br>
                 <div class="form-group">

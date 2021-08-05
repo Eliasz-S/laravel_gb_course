@@ -15,6 +15,10 @@ class CreateSourcesTable extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('title', 191);
             $table->string('url', 191);
             $table->text('description')->nullable();
