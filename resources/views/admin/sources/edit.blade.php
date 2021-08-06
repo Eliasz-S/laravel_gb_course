@@ -1,16 +1,16 @@
 @extends('layouts.admin')
-@section('title') Редактировать новость - @parent @stop
+@section('title') Редактировать источник - @parent @stop
 @section('content')
 
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Редактировать новость</h1>
+            <h1 class="mt-4">Редактировать источник</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Редактировать новость</li>
+                <li class="breadcrumb-item active">Редактировать новостной источник</li>
             </ol>
             @include('inc.error')
         
-            <form action="{{ route('admin.news.update', ['news' => $news]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.sources.update', ['source' => $source]) }}" method="POST">
                 @csrf
                 @method('put')
                 <div class="form-group">
@@ -19,7 +19,7 @@
                         @foreach ($categories as $category)
                             <option 
                                 value="{{ $category->id }}" 
-                                @if ($news->category_id === $category->id) 
+                                @if ($source->category_id === $category->id) 
                                     selected 
                                 @endif
                             >
@@ -30,27 +30,18 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="title">Заголовок</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{ $news->title }}">
+                    <label for="title">Название источника</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ $source->title }}">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="image">Изображение</label>
-                    <input type="file" class="form-control" id="image" name="image">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="status">Статус</label>
-                    <select class="form-control" name="status" id="status">
-                        <option @if($news->status === 'Draft') selected @endif> Draft </option>
-                        <option @if($news->status === 'Published') selected @endif> Published </option>
-                        <option @if($news->status === 'Blocked') selected @endif> Blocked </option>
-                    </select>
+                    <label for="url">Ссылка на источник</label>
+                    <input type="text" class="form-control" id="url" name="url" value="{{ $source->url }}">
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="description">Описание</label>
-                    <textarea class="form-control" name="description" id="description" cols="30" rows="10">{!! $news->description !!}</textarea>
+                    <textarea class="form-control" name="description" id="description" cols="30" rows="10">{{ $source->description }}</textarea>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Сохранить</button>
